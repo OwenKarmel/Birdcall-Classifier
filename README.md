@@ -9,8 +9,7 @@ Feature extraction is a vital part of data science and machine learning workflow
 ## Dataset
 The dataset consists of 3 second audio samples extracted from longer recordings, featuring a variety of bird species and environmental conditions. Participants must preprocess and extract valuable features from these samples to create a classifier model. These features must be robust to noise/variability in recording quality while navigating challenges like multiple overlapping, similar sounding bird calls. The dataset is copyright of Jayadev Acharya, a professor at Cornell, and used with permission. 
 
-![](https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg)
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg" width="48">
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg" width="480">
 
 ## Data Processing/Feature Extraction:
 Feature extraction was done via the Librosa package. Librosa is a package for audio analysis, and thus applicable to the task at hand. I added features in the following order to achieve the maximum possible accuracy. The features were flattened and concatenated into a 1d array for model training in the following order.
