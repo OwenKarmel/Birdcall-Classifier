@@ -1,13 +1,11 @@
 # Birdcall Classifier Project
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg" width="250">
-
 ## What is it? 
 This classifier categorizes birdcalls from a labelled dataset of four bird species. With the input of a .wav file containing a potential birdcall, the classifier builds a decision tree from the training set and outputs predictions from a test set to a csv file with approximately 80% accuracy. 
 
 ## Why?
 Feature extraction is a vital part of data science and machine learning workflows. To practice feature extraction that can effectively classify bird calls, I limited myself to only classical machine learning methods (kNN, SVM etc) to challenge myself to carefully consider feature extraction. 
-
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg" width="250">
 ## Dataset
 The dataset consists of 3 second audio samples extracted from longer recordings and then manually annotated, featuring a variety of bird species and environmental conditions. The labels: {0, 1, 2, 3, 4} correspond to {American_Robin, Carolina_Wren, Northern_Cardinal, Song Sparrow, White-crowned Sparrow}. Some samples are of very poor quality, containing a lot of noise or environmental background. The dataset is copyright of Jayadev Acharya, a professor at Cornell, and used with permission. 
 
