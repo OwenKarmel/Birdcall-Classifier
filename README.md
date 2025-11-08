@@ -6,13 +6,13 @@ This classifier categorizes birdcalls from a labelled dataset of four bird speci
 ## Why?
 Feature extraction is a vital part of data science and machine learning workflows. To practice feature extraction that can effectively classify bird calls, I limited myself to only classical machine learning methods (kNN, SVM etc) to challenge myself to carefully consider feature extraction. 
 
-## Dataset
-The dataset consists of 3 second audio samples extracted from longer recordings, featuring a variety of bird species and environmental conditions. Participants must preprocess and extract valuable features from these samples to create a classifier model. These features must be robust to noise/variability in recording quality while navigating challenges like multiple overlapping, similar sounding bird calls. The dataset is copyright of Jayadev Acharya, a professor at Cornell, and used with permission. 
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg" width="250">
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg" width="480">
+## Dataset
+The dataset consists of 3 second audio samples extracted from longer recordings and then manually annotated, featuring a variety of bird species and environmental conditions. The labels: {0, 1, 2, 3, 4} correspond to {American_Robin, Carolina_Wren, Northern_Cardinal, Song Sparrow, White-crowned Sparrow}. Some samples are of very poor quality, containing a lot of noise or environmental background. The dataset is copyright of Jayadev Acharya, a professor at Cornell, and used with permission. 
 
 ## Data Processing/Feature Extraction:
-Feature extraction was done via the Librosa package. Librosa is a package for audio analysis, and thus applicable to the task at hand. I added features in the following order to achieve the maximum possible accuracy. The features were flattened and concatenated into a 1d array for model training in the following order.
+Feature extraction was done via the Librosa package. Librosa is a package for audio analysis, and thus applicable to the task at hand. I experimented with various combinations of features and their location in the input array to achieve the maximum possible accuracy. The features were flattened and concatenated into a 1d array for model training in the following order. A brief description of each follows below.
 
 ### Librosa.feature.mfcc:
 Mel-frequency cepstral coefficients (MFCCs) are features widely used in audio analysis and speech recognition to represent the spectral properties of a sound signal in a way that mimics human auditory perception. MFCCs are computed using the Mel scale, which is a nonlinear scale that approximates the way humans perceive pitch and frequency. On the Mel scale, lower frequencies are more finely resolved than higher frequencies. They reduce the high-dimensional raw audio signal into a low-dimensional feature vector.
@@ -40,9 +40,10 @@ Feature used to describe the frequency below which a specified percentage (typic
 I tested models with raw flattened mel spectrogram input. However, this actually decreased the accuracy of the models. For instance, the accuracy of gradient boosting decreased from 70% to 50% when the raw Mel spectrogram was included. The data included in the raw mel spectrogram was too high a dimensionality and too redundant with the other features to be worth it. 
 
 ## Model Selection:
+
 I compared three models: k-NN, SVM, and gradient boosting. I found that I could get a 10-20% increase using gradient boosting over k-NN and SVM. Additionally, given that sklearn has an efficient implementation of gradient boosting using histograms it was not much more computationally costly compared to the other models. Finally, independent of this class, I am interested in gradient boosting because it plays a significant role in my undergraduate research in a biomedical engineering lab, where we use it to classify spectroscopy data collected from blood cells.
 
-Summary of Gradient Boosting:
+### Summary of Gradient Boosting:
 
 The basic unit in modern gradient boosting algorithms is a decision tree. A decision tree is a simple model for classification. It resembles a human made decision tree, such as a flowchart. The tree is made via recursive partitioning. Recursive partitioning can be approached through several mathematical strategies, but it essentially just aims to minimize the amount of misclassified data for a given feature. One way to do this is with Gini Impurity, which quantifies how “impure” a partition is. It is one minus the sum of the frequency of each class squared, so 0 is perfectly pure, and an even mix of four classes would be .75, which is impure. A decision tree will take the feature that best splits the data and split the whole data set (or root node) into two parts. Then, the resulting two nodes are split again, continuing recursively to a certain endpoint defined by the hyperparameters. At the end of each node is a “leaf”, or the best classification for the data in the node. 
 
@@ -50,4 +51,11 @@ The basic unit in modern gradient boosting algorithms is a decision tree. A deci
 
 Gradient boosting is an ensemble approach, meaning that it combines many less accurate decision trees into a more powerful model. The algorithm to do so is called “boosting”, hence its name. Boosting in classification is based on making a new tree on the gradient of predicted log-odds, which is a measure of the residuals (errors) of the previous attempt. The update to the new tree is scaled by a hyperparameter called shrinkage. When using gradient boosting algorithms, one tradeoff is scaling this shrinkage, in addition to the number of trees the model iterates through. A high shrinkage allows the model to be trained with fewer iterations; however, it increases the chance of overfitting the data. Meanwhile, the “careful” approach of a low shrinkage and many estimators is more computationally intensive, but produces a more accurate model.
 
-Tuning shrinkage and the number of estimators was difficult due to the size of the dataset and number of features being inputted into the model. I settled on a shrinkage rate of .01 and a maximum number of estimators of 1500. These hyperparameters increased the accuracy by 2% while still keeping the program’s total runtime to under an hour.
+### Hyperparameter Optimization
+
+Tuning shrinkage and the number of estimators was difficult due to the size of the dataset and number of features being inputted into the model. I settled on a shrinkage rate of .01 and a maximum number of estimators of 1500. These hyperparameters increased the accuracy by 2% while still keeping the program’s training time to under an hour on my laptop.
+
+Conclusion:
+The model reached an final accuracy of 78.66%. To further improve model performance, I could improve the feature selection of the model via finding new features outside of librosa. Additionally, the gradient boosting algorithm has more parameters than just shrinkage and number of estimators, these could be tuned systematically as well. Overall, I found this exercise helpful for aquainting myself with data science workflows and hope to apply a modern approach such as ANNs for my next project.
+
+
