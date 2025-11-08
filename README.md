@@ -3,13 +3,14 @@
 ## What is it? 
 This classifier categorizes birdcalls from a labelled dataset of four bird species. With the input of a .wav file containing a potential birdcall, the classifier builds a decision tree from the training set and outputs predictions from a test set to a csv file with approximately 80% accuracy. 
 
-##Why?
+## Why?
 Feature extraction is a vital part of data science and machine learning workflows. To practice feature extraction that can effectively classify bird calls, I limited myself to only classical machine learning methods (kNN, SVM etc) to challenge myself to carefully consider feature extraction. 
 
 ## Dataset
 The dataset consists of 3 second audio samples extracted from longer recordings, featuring a variety of bird species and environmental conditions. Participants must preprocess and extract valuable features from these samples to create a classifier model. These features must be robust to noise/variability in recording quality while navigating challenges like multiple overlapping, similar sounding bird calls. The dataset is copyright of Jayadev Acharya, a professor at Cornell, and used with permission. 
 
 ![](https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/201903_Zebra_finch.svg" width="48">
 
 ## Data Processing/Feature Extraction:
 Feature extraction was done via the Librosa package. Librosa is a package for audio analysis, and thus applicable to the task at hand. I added features in the following order to achieve the maximum possible accuracy. The features were flattened and concatenated into a 1d array for model training in the following order.
