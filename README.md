@@ -13,7 +13,7 @@ The dataset consists of 3 second audio samples extracted from longer recordings 
 Feature extraction was done via the Librosa package. Librosa is a package for audio analysis, and thus applicable to the task at hand. I experimented with various combinations of features and their location in the input array to achieve the maximum possible accuracy. The features were flattened and concatenated into a 1d array for model training in the following order. A brief description of each follows below.
 
 ### Librosa.feature.mfcc:
-Mel-frequency cepstral coefficients (MFCCs) are features widely used in audio analysis and speech recognition to represent the spectral properties of a sound signal in a way that mimics human auditory perception. MFCCs are computed using the Mel scale, which is a nonlinear scale that approximates the way humans perceive pitch and frequency. On the Mel scale, lower frequencies are more finely resolved than higher frequencies. They reduce the high-dimensional raw audio signal into a low-dimensional feature vector.
+Mel-frequency cepstral coefficients (MFCCs) are features widely used in audio analysis and speech recognition to represent the spectral properties of a sound signal in a way that mimics human auditory perception. MFCCs are computed using the Mel scale, which is a nonlinear scale that approximates the way humans perceive pitch and frequency. On the Mel scale, lower frequencies are more finely resolved than higher frequencies. By selecting the features most relevant for human birdcall perception, the MFCCs increase the signal to noise ratio of the feature space and with it model accuracy.
 
 ### Librosa.feature.rms: 
 Root-mean-square (RMS) values are another statistical measure of center in audio analysis. RMS values provide a way to summarize the overall amplitude of a signal. As the name suggests, they are calculated by taking the square root of the mean of squares of values. Unlike other spectral features, RMS values are not calculated from the FFT. 
@@ -39,7 +39,7 @@ I tested models with raw flattened mel spectrogram input. However, this actually
 
 ## Model Selection:
 
-I compared three models: k-NN, SVM, and gradient boosting. I found that I could get a 10-20% increase using gradient boosting over k-NN and SVM. Additionally, given that sklearn has an efficient implementation of gradient boosting using histograms it was not much more computationally costly compared to the other models. Finally, independent of this class, I am interested in gradient boosting because it plays a significant role in my undergraduate research in a biomedical engineering lab, where we use it to classify spectroscopy data collected from blood cells.
+I compared three models: k-NN, SVM, and gradient boosting. I found that I could get a 10-20% increase using gradient boosting over k-NN and SVM. Additionally, given that sklearn has an efficient implementation of gradient boosting using histograms it was not much more computationally costly compared to the other models. Finally, I am interested in gradient boosting because it plays a significant role in my undergraduate research in a biomedical engineering lab, where we use it to classify labelled spectroscopy data collected from blood cells.
 
 ### Summary of Gradient Boosting:
 
@@ -54,6 +54,6 @@ Gradient boosting is an ensemble approach, meaning that it combines many less ac
 Tuning shrinkage and the number of estimators was difficult due to the size of the dataset and number of features being inputted into the model. I settled on a shrinkage rate of .01 and a maximum number of estimators of 1500. These hyperparameters increased the accuracy by 2% while still keeping the program’s training time to under an hour on my laptop.
 
 Conclusion:
-The model reached an final accuracy of 78.66%. To further improve model performance, I could improve the feature selection of the model via finding new features outside of librosa. Additionally, the gradient boosting algorithm has more parameters than just shrinkage and number of estimators, these could be tuned systematically as well. Overall, I found this exercise helpful for aquainting myself with data science workflows and hope to apply a modern approach such as ANNs for my next project.
+The model reached an final accuracy of 78.66%. To further improve model performance, I could improve the feature selection of the model via finding new features outside of librosa. Additionally, the gradient boosting algorithm has more parameters than just shrinkage and number of estimators, these could be tuned systematically as well. Overall, I found this exercise helpful for acquainting myself with data science workflows and hope to apply a modern approach such as ANNs for my next project.
 
 
