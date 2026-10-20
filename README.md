@@ -1,4 +1,5 @@
 # Birdcall Classifier Project
+> AI Use Disclosure: AI coding agents were not used in any manner for this project, including coding, debugging or the write-up.
 
 ## What is it? 
 This classifier categorizes birdcalls from a labelled dataset of four bird species. With the input of a .wav file containing a potential birdcall, the classifier builds a decision tree from the training set and outputs predictions from a test set to a csv file with approximately 80% accuracy. 
